@@ -144,7 +144,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
 <div id="loginPage">
   <div class="login-card" id="loginCard">
     <div class="brand">
@@ -163,7 +162,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- ===== APP ===== -->
 <div id="appPage">
   <div class="topbar">
     <div class="topbar-left">
@@ -183,7 +181,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 
   <div class="main">
 
-    <!-- BOOKS TAB -->
     <div id="tabBooks">
       <div class="stats-row" id="bookStats"></div>
       <div class="section-head">
@@ -197,7 +194,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="books-grid" id="booksGrid"></div>
     </div>
 
-    <!-- LOGS TAB -->
     <div id="tabLogs" style="display:none">
       <div class="stats-row" id="logStats"></div>
       <div class="log-panel">
@@ -223,7 +219,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- BOOK MODAL -->
 <div class="modal-bg" id="bookModal">
   <div class="modal">
     <h3 id="bookModalTitle"><i class="ti ti-book"></i> Kitob qo'shish</h3>
@@ -240,7 +235,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
 </div>
 
-<!-- SETTINGS MODAL -->
 <div class="modal-bg" id="settingsModal">
   <div class="modal">
     <h3><i class="ti ti-settings"></i> Sozlamalar</h3>
@@ -255,6 +249,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </div>
 
 <script>
+// ==========================================
+// TELEGRAM BOT SOZLAMALARI
+// ==========================================
+const API_TOKEN = "8809816027:AAFrtT_42rUNQDBYQG51-v4Q-7MxZvIlrBo"; 
+// Bot xabar yuborishi kerak bo'lgan Telegram ID (Sizning profilingiz ID-si)
+const CHAT_ID = "YOUR_PERSONAL_TELEGRAM_ID"; 
+
+// Telegram'ga xabar yuborish funksiyasi
+async function sendTelegramNotification(text) {
+  if (!API_TOKEN || CHAT_ID === "YOUR_PERSONAL_TELEGRAM_ID") return;
+  try {
+    await fetch(`https://api.telegram.org/bot${API_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'HTML' })
+    });
+  } catch (e) { console.error("Telegram xabari ketmadi:", e); }
+}
+// ==========================================
+
 const CONF_KEY = 'mkut_conf';
 const BOOKS_KEY = 'mkut_books';
 const LOGS_KEY = 'mkut_logs';
@@ -320,6 +334,11 @@ async function doLogin(){
   const ua=navigator.userAgent;
   const entry={ id:Date.now(), time:new Date().toISOString(), ip:curIP||'?', browser:getBrowser(ua), os:getOS(ua), location:loc };
   const logs=getLogs(); logs.unshift(entry); saveLogs(logs);
+  
+  // Telegram bildirishnoma yuborish
+  const logText = `🔑 <b>Tizimga kirish aniqlandi!</b>\n\n🕒 Vaqt: ${fmtDate(entry.time)} ${fmtTime(entry.time)}\n🌐 IP: ${entry.ip}\n💻 Qurilma: ${entry.browser} (${entry.os})\n📍 Joylashuv: ${loc}`;
+  await sendTelegramNotification(logText);
+
   btn.disabled=false; btn.textContent='Kirish';
   isFresh=true;
   document.getElementById('loginPage').style.display='none';
@@ -420,13 +439,20 @@ function saveBook(){
   if(!name){err.innerHTML='<i class="ti ti-alert-circle"></i> Kitob nomi majburiy';return}
   if(!author){err.innerHTML='<i class="ti ti-alert-circle"></i> Muallif majburiy';return}
   const books=getBooks();
+  
+  let actionText = "";
   if(editingId){
     const i=books.findIndex(b=>b.id==editingId);
     if(i>-1) books[i]={...books[i],name,author,year,publisher,desc};
+    actionText = `📝 <b>Kitob tahrirlandi:</b>\n📚 Nomi: ${name}\n✍️ Muallif: ${author}`;
   } else {
     books.unshift({id:Date.now(),name,author,year,publisher,desc,added:new Date().toISOString()});
+    actionText = `➕ <b>Yangi kitob qo'shildi!</b>\n📚 Nomi: ${name}\n✍️ Muallif: ${author}\n🗓 Yili: ${year||'—'}\n🏢 Nashriyot: ${publisher||'—'}`;
   }
+  
   saveBooks(books);
+  sendTelegramNotification(actionText); // Telegram bildirishnoma
+  
   closeBookModal();
   renderBookStats();
   renderBooks();
@@ -434,6 +460,10 @@ function saveBook(){
 
 function deleteBook(id){
   if(!confirm('Kitobni o\'chirasizmi?'))return;
+  const book = getBooks().find(b=>b.id==id);
+  if(book) {
+    sendTelegramNotification(`🗑 <b>Kitob o'chirildi:</b>\n📚 Nomi: ${book.name}\n✍️ Muallif: ${book.author}`);
+  }
   saveBooks(getBooks().filter(b=>b.id!=id));
   renderBookStats(); renderBooks();
 }
