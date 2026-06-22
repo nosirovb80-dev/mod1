@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Mening Kutubxonam</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f5f4;--surface:#fff;--surface2:#f5f5f4;
+  --border:rgba(0,0,0,0.09);--border2:rgba(0,0,0,0.16);
+  --text:#1a1a1a;--text2:#6b7280;--text3:#9ca3af;
+  --accent:#2563eb;--accent-bg:#eff6ff;
+  --success-bg:#f0fdf4;--success:#16a34a;
+  --danger-bg:#fef2f2;--danger:#dc2626;
+  --warn-bg:#fffbeb;--warn:#d97706;
+  --r:10px;--rl:14px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#111110;--surface:#1c1c1b;--surface2:#252524;
+  --border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.16);
+  --text:#f5f5f4;--text2:#a8a29e;--text3:#78716c;
+  --accent:#60a5fa;--accent-bg:#1e3a5f;
+  --success-bg:#052e16;--success:#4ade80;
+  --danger-bg:#450a0a;--danger:#f87171;
+  --warn-bg:#451a03;--warn:#fbbf24;
+}}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);min-height:100vh;color:var(--text)}
+
+/* ===== LOGIN ===== */
+#loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.login-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);padding:2.5rem 2rem;width:100%;max-width:360px;animation:up .35s ease}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:2rem}
+.brand-icon{width:44px;height:44px;background:var(--text);border-radius:11px;display:flex;align-items:center;justify-content:center;color:var(--surface);font-size:22px;flex-shrink:0}
+.brand-name{font-size:17px;font-weight:600}
+.brand-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:13px;color:var(--text2);margin-bottom:5px;font-weight:500}
+.fg input{width:100%;padding:10px 14px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--surface2);color:var(--text);font-size:15px;outline:none;transition:border-color .2s}
+.fg input:focus{border-color:var(--accent)}
+.btn-primary{width:100%;padding:11px;background:var(--text);color:var(--surface);border:none;border-radius:var(--r);font-size:15px;font-weight:500;cursor:pointer;margin-top:.5rem;transition:opacity .2s}
+.btn-primary:hover{opacity:.8}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.err{font-size:13px;color:var(--danger);margin-top:8px;min-height:16px;display:flex;align-items:center;gap:6px}
+.shake{animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+/* ===== APP LAYOUT ===== */
+#appPage{display:none;min-height:100vh;flex-direction:column}
+.topbar{background:var(--surface);border-bottom:0.5px solid var(--border);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-icon{width:32px;height:32px;background:var(--text);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--surface);font-size:16px}
+.topbar-name{font-size:15px;font-weight:600}
+.topbar-right{display:flex;gap:8px}
+.icon-btn{background:none;border:0.5px solid var(--border);border-radius:var(--r);width:34px;height:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:16px;transition:background .15s}
+.icon-btn:hover{background:var(--surface2)}
+
+.tabs{background:var(--surface);border-bottom:0.5px solid var(--border);padding:0 1.5rem;display:flex;gap:0}
+.tab{padding:12px 18px;font-size:14px;font-weight:500;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s;display:flex;align-items:center;gap:6px}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab:hover{color:var(--text)}
+
+.main{flex:1;padding:1.5rem;max-width:900px;width:100%;margin:0 auto}
+
+/* ===== STATS ===== */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+@media(max-width:600px){.stats-row{grid-template-columns:1fr 1fr}}
+.stat{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.stat-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.stat-val{font-size:20px;font-weight:600}
+.stat-sub{font-size:11px;color:var(--text3);margin-top:3px}
+
+/* ===== BOOK SECTION ===== */
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.section-title{font-size:15px;font-weight:600}
+.btn-add{display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;transition:opacity .2s}
+.btn-add:hover{opacity:.85}
+
+.search-bar{position:relative;margin-bottom:1rem}
+.search-bar input{width:100%;padding:9px 14px 9px 36px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--surface);color:var(--text);font-size:14px;outline:none}
+.search-bar input:focus{border-color:var(--accent)}
+.search-bar i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:16px}
+
+.books-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.book-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);padding:1.1rem 1.2rem;transition:border-color .15s;cursor:default}
+.book-card:hover{border-color:var(--border2)}
+.book-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.book-title{font-size:14px;font-weight:600;line-height:1.4;flex:1;margin-right:8px}
+.book-actions{display:flex;gap:4px;flex-shrink:0}
+.book-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:15px;padding:2px;transition:color .15s}
+.book-btn:hover{color:var(--text)}
+.book-btn.del:hover{color:var(--danger)}
+.book-meta{font-size:12px;color:var(--text2);margin-bottom:6px;display:flex;flex-wrap:wrap;gap:4px 10px}
+.book-meta span{display:flex;align-items:center;gap:3px}
+.book-desc{font-size:12px;color:var(--text2);line-height:1.55;border-top:0.5px solid var(--border);padding-top:8px;margin-top:4px}
+.empty{padding:3rem;text-align:center;color:var(--text2);font-size:14px}
+.empty i{font-size:32px;display:block;margin-bottom:10px;color:var(--text3)}
+
+/* ===== LOG SECTION ===== */
+.log-panel{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.log-head{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:0.5px solid var(--border)}
+.log-head-title{font-size:14px;font-weight:500}
+.log-count{font-size:12px;color:var(--text2);background:var(--surface2);padding:3px 10px;border-radius:99px}
+.log-row{display:grid;grid-template-columns:28px 1fr 1fr 80px auto;align-items:center;gap:8px;padding:10px 16px;border-bottom:0.5px solid var(--border);font-size:13px;transition:background .1s}
+@media(max-width:600px){.log-row{grid-template-columns:28px 1fr 1fr auto;}.log-loc{display:none}}
+.log-row:last-child{border-bottom:none}
+.log-row:hover{background:var(--surface2)}
+.log-num{font-size:11px;color:var(--text3);font-family:monospace;text-align:center}
+.log-time{font-weight:500}
+.log-date{font-size:11px;color:var(--text2);margin-top:1px}
+.log-ip{font-family:monospace;font-size:12px;color:var(--text2)}
+.log-browser{font-size:11px;color:var(--text3);margin-top:1px}
+.log-loc{font-size:12px;color:var(--text2)}
+.badge{font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500;white-space:nowrap}
+.badge-now{background:var(--success-bg);color:var(--success)}
+.badge-old{background:var(--surface2);color:var(--text3)}
+.log-empty{padding:2.5rem;text-align:center;color:var(--text2);font-size:14px}
+
+.bottom-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:1rem}
+.cur-ip{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:6px}
+.ip-copy{cursor:pointer;font-size:14px;color:var(--text3);transition:color .15s}
+.ip-copy:hover{color:var(--text)}
+.btn-danger{font-size:12px;color:var(--danger);background:none;border:0.5px solid var(--border);border-radius:var(--r);padding:6px 12px;cursor:pointer;transition:background .15s}
+.btn-danger:hover{background:var(--danger-bg)}
+
+/* ===== MODAL ===== */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--rl);padding:1.75rem 1.5rem;width:100%;max-width:460px;animation:up .25s ease;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
+.modal .fg{margin-bottom:.9rem}
+.modal textarea{width:100%;padding:10px 14px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--surface2);color:var(--text);font-size:14px;outline:none;resize:vertical;min-height:80px;font-family:inherit}
+.modal textarea:focus{border-color:var(--accent)}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
+.modal-btns button{padding:8px 18px;border-radius:var(--r);font-size:13px;cursor:pointer;border:0.5px solid var(--border2);background:var(--surface2);color:var(--text);transition:opacity .15s}
+.modal-btns .save{background:var(--accent);color:#fff;border-color:var(--accent)}
+.modal-btns button:hover{opacity:.8}
+
+.spinner{display:inline-block;width:13px;height:13px;border:2px solid var(--border2);border-top-color:var(--text);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="loginPage">
+  <div class="login-card" id="loginCard">
+    <div class="brand">
+      <div class="brand-icon"><i class="ti ti-books"></i></div>
+      <div>
+        <div class="brand-name">Mening Kutubxonam</div>
+        <div class="brand-sub">Shaxsiy kitob to'plami</div>
+      </div>
+    </div>
+    <div class="fg">
+      <label>Parol</label>
+      <input type="password" id="passInput" placeholder="Parolni kiriting" onkeydown="if(event.key==='Enter')doLogin()" autofocus/>
+    </div>
+    <button class="btn-primary" id="loginBtn" onclick="doLogin()">Kirish</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="appPage">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-icon"><i class="ti ti-books"></i></div>
+      <div class="topbar-name">Mening Kutubxonam</div>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" onclick="openSettings()" title="Sozlamalar"><i class="ti ti-settings"></i></button>
+      <button class="icon-btn" onclick="doLogout()" title="Chiqish"><i class="ti ti-logout"></i></button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('books',this)"><i class="ti ti-books"></i> Kitoblar</div>
+    <div class="tab" onclick="switchTab('logs',this)"><i class="ti ti-list"></i> Kirish jurnali</div>
+  </div>
+
+  <div class="main">
+
+    <!-- BOOKS TAB -->
+    <div id="tabBooks">
+      <div class="stats-row" id="bookStats"></div>
+      <div class="section-head">
+        <div class="section-title">Kitoblar ro'yxati</div>
+        <button class="btn-add" onclick="openBookModal()"><i class="ti ti-plus"></i> Kitob qo'shish</button>
+      </div>
+      <div class="search-bar">
+        <i class="ti ti-search"></i>
+        <input type="text" id="searchInput" placeholder="Kitob nomi, muallif yoki nashriyot bo'yicha qidirish..." oninput="renderBooks()"/>
+      </div>
+      <div class="books-grid" id="booksGrid"></div>
+    </div>
+
+    <!-- LOGS TAB -->
+    <div id="tabLogs" style="display:none">
+      <div class="stats-row" id="logStats"></div>
+      <div class="log-panel">
+        <div class="log-head">
+          <span class="log-head-title"><i class="ti ti-history"></i> Kirish tarixi</span>
+          <span class="log-count" id="logCount">0 ta</span>
+        </div>
+        <div id="logList"></div>
+      </div>
+      <div class="bottom-bar">
+        <div class="cur-ip">
+          <i class="ti ti-wifi"></i>
+          Hozirgi IP: <strong id="curIP"><span class="spinner"></span></strong>
+          <i class="ti ti-copy ip-copy" onclick="copyIP()" title="Nusxa olish"></i>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-danger" onclick="exportLogs()"><i class="ti ti-download"></i> CSV</button>
+          <button class="btn-danger" onclick="clearLogs()"><i class="ti ti-trash"></i> Tozalash</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOOK MODAL -->
+<div class="modal-bg" id="bookModal">
+  <div class="modal">
+    <h3 id="bookModalTitle"><i class="ti ti-book"></i> Kitob qo'shish</h3>
+    <div class="fg"><label>Kitob nomi *</label><input type="text" id="bName" placeholder="Masalan: Inson qanday bo'lishi kerak"/></div>
+    <div class="fg"><label>Muallif *</label><input type="text" id="bAuthor" placeholder="Masalan: Alisher Navoiy"/></div>
+    <div class="fg"><label>Nashr yili</label><input type="number" id="bYear" placeholder="Masalan: 2020" min="1000" max="2099"/></div>
+    <div class="fg"><label>Nashriyot / Tashkilot</label><input type="text" id="bPublisher" placeholder="Masalan: Sharq nashriyoti"/></div>
+    <div class="fg"><label>Qisqa ma'lumot</label><textarea id="bDesc" placeholder="Kitob haqida qisqacha..."></textarea></div>
+    <div class="err" id="bookErr"></div>
+    <div class="modal-btns">
+      <button onclick="closeBookModal()">Bekor</button>
+      <button class="save" onclick="saveBook()">Saqlash</button>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal-bg" id="settingsModal">
+  <div class="modal">
+    <h3><i class="ti ti-settings"></i> Sozlamalar</h3>
+    <div class="fg"><label>Yangi parol (bo'sh qoldirsangiz o'zgarmaydi)</label><input type="password" id="newPass1" placeholder="Yangi parol"/></div>
+    <div class="fg"><label>Parolni tasdiqlang</label><input type="password" id="newPass2" placeholder="Qaytadan kiriting"/></div>
+    <div class="err" id="settingsErr"></div>
+    <div class="modal-btns">
+      <button onclick="closeSettings()">Bekor</button>
+      <button class="save" onclick="saveSettings()">Saqlash</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CONF_KEY = 'mkut_conf';
+const BOOKS_KEY = 'mkut_books';
+const LOGS_KEY = 'mkut_logs';
+
+function getConf(){ try{return JSON.parse(localStorage.getItem(CONF_KEY))||{pass:'admin192'}}catch(e){return{pass:'admin192'}} }
+function saveConf(c){ localStorage.setItem(CONF_KEY,JSON.stringify(c)) }
+function getBooks(){ try{return JSON.parse(localStorage.getItem(BOOKS_KEY))||[]}catch(e){return[]} }
+function saveBooks(b){ localStorage.setItem(BOOKS_KEY,JSON.stringify(b)) }
+function getLogs(){ try{return JSON.parse(localStorage.getItem(LOGS_KEY))||[]}catch(e){return[]} }
+function saveLogs(l){ localStorage.setItem(LOGS_KEY,JSON.stringify(l)) }
+
+let curIP=null, editingId=null, isFresh=false;
+
+function fmtDate(iso){ return new Date(iso).toLocaleDateString('uz-UZ',{day:'2-digit',month:'short',year:'numeric'}) }
+function fmtTime(iso){ return new Date(iso).toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) }
+function isToday(iso){ const d=new Date(iso),n=new Date(); return d.getDate()===n.getDate()&&d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear() }
+function getBrowser(ua){ if(!ua)return'?'; if(ua.includes('Edg'))return'Edge'; if(ua.includes('Chrome'))return'Chrome'; if(ua.includes('Firefox'))return'Firefox'; if(ua.includes('Safari'))return'Safari'; return'Boshqa' }
+function getOS(ua){ if(!ua)return''; if(ua.includes('Windows'))return'Windows'; if(ua.includes('Mac OS'))return'macOS'; if(ua.includes('Android'))return'Android'; if(ua.includes('iPhone')||ua.includes('iPad'))return'iOS'; if(ua.includes('Linux'))return'Linux'; return'' }
+
+async function fetchIP(){
+  try{ const r=await fetch('https://api.ipify.org?format=json'); const d=await r.json(); curIP=d.ip||'?'; }
+  catch(e){ curIP='Aniqlanmadi'; }
+  const el=document.getElementById('curIP'); if(el) el.textContent=curIP;
+}
+
+async function getLocation(){
+  return new Promise(resolve=>{
+    if(!navigator.geolocation){resolve('GPS yo\'q');return}
+    navigator.geolocation.getCurrentPosition(
+      async pos=>{
+        try{
+          const r=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`);
+          const d=await r.json();
+          const city=d.address?.city||d.address?.town||d.address?.village||'';
+          const region=d.address?.state||'';
+          const country=d.address?.country||'';
+          resolve([city,region,country].filter(Boolean).join(', ')||'Aniqlanmadi');
+        }catch(e){resolve(`${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`)}
+      },
+      ()=>resolve('Ruxsat berilmadi'),
+      {timeout:6000}
+    )
+  })
+}
+
+async function doLogin(){
+  const val=document.getElementById('passInput').value;
+  const btn=document.getElementById('loginBtn');
+  const err=document.getElementById('loginErr');
+  if(!val)return;
+  if(val!==getConf().pass){
+    err.innerHTML='<i class="ti ti-alert-circle"></i> Parol noto\'g\'ri';
+    document.getElementById('loginCard').classList.add('shake');
+    setTimeout(()=>document.getElementById('loginCard').classList.remove('shake'),400);
+    document.getElementById('passInput').value='';
+    return;
+  }
+  err.innerHTML='';
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Kirilmoqda...';
+  if(!curIP) await fetchIP();
+  const loc=await getLocation();
+  const ua=navigator.userAgent;
+  const entry={ id:Date.now(), time:new Date().toISOString(), ip:curIP||'?', browser:getBrowser(ua), os:getOS(ua), location:loc };
+  const logs=getLogs(); logs.unshift(entry); saveLogs(logs);
+  btn.disabled=false; btn.textContent='Kirish';
+  isFresh=true;
+  document.getElementById('loginPage').style.display='none';
+  document.getElementById('appPage').style.display='flex';
+  renderAll();
+}
+
+function doLogout(){
+  document.getElementById('appPage').style.display='none';
+  document.getElementById('loginPage').style.display='flex';
+  document.getElementById('passInput').value='';
+  isFresh=false;
+}
+
+function switchTab(name,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tabBooks').style.display=name==='books'?'block':'none';
+  document.getElementById('tabLogs').style.display=name==='logs'?'block':'none';
+}
+
+function renderAll(){ renderBookStats(); renderBooks(); renderLogStats(); renderLogs(); if(curIP) document.getElementById('curIP').textContent=curIP; }
+
+function renderBookStats(){
+  const books=getBooks();
+  const years=[...new Set(books.map(b=>b.year).filter(Boolean))];
+  const authors=[...new Set(books.map(b=>b.author).filter(Boolean))];
+  document.getElementById('bookStats').innerHTML=`
+    <div class="stat"><div class="stat-label">Jami kitob</div><div class="stat-val">${books.length}</div></div>
+    <div class="stat"><div class="stat-label">Mualliflar</div><div class="stat-val">${authors.length}</div></div>
+    <div class="stat"><div class="stat-label">So'nggi yil</div><div class="stat-val">${years.sort().reverse()[0]||'—'}</div></div>
+    <div class="stat"><div class="stat-label">Nashriyotlar</div><div class="stat-val">${[...new Set(books.map(b=>b.publisher).filter(Boolean))].length}</div></div>
+  `;
+}
+
+function renderBooks(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  let books=getBooks();
+  if(q) books=books.filter(b=>(b.name+b.author+b.publisher+b.desc).toLowerCase().includes(q));
+  const grid=document.getElementById('booksGrid');
+  if(!books.length){
+    grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><i class="ti ti-books"></i>${q?'Qidiruv bo\'yicha hech narsa topilmadi':'Hali kitob qo\'shilmagan'}</div>`;
+    return;
+  }
+  grid.innerHTML=books.map(b=>`
+    <div class="book-card">
+      <div class="book-top">
+        <div class="book-title">${esc(b.name)}</div>
+        <div class="book-actions">
+          <button class="book-btn" onclick="openBookModal('${b.id}')" title="Tahrirlash"><i class="ti ti-edit"></i></button>
+          <button class="book-btn del" onclick="deleteBook('${b.id}')" title="O'chirish"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>
+      <div class="book-meta">
+        <span><i class="ti ti-user"></i>${esc(b.author||'—')}</span>
+        ${b.year?`<span><i class="ti ti-calendar"></i>${b.year}</span>`:''}
+        ${b.publisher?`<span><i class="ti ti-building"></i>${esc(b.publisher)}</span>`:''}
+      </div>
+      ${b.desc?`<div class="book-desc">${esc(b.desc)}</div>`:''}
+    </div>
+  `).join('');
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+
+function openBookModal(id){
+  editingId=id||null;
+  const modal=document.getElementById('bookModal');
+  document.getElementById('bookErr').innerHTML='';
+  if(id){
+    const b=getBooks().find(x=>x.id==id);
+    if(!b)return;
+    document.getElementById('bookModalTitle').innerHTML='<i class="ti ti-edit"></i> Kitobni tahrirlash';
+    document.getElementById('bName').value=b.name||'';
+    document.getElementById('bAuthor').value=b.author||'';
+    document.getElementById('bYear').value=b.year||'';
+    document.getElementById('bPublisher').value=b.publisher||'';
+    document.getElementById('bDesc').value=b.desc||'';
+  } else {
+    document.getElementById('bookModalTitle').innerHTML='<i class="ti ti-book"></i> Kitob qo\'shish';
+    document.getElementById('bName').value='';
+    document.getElementById('bAuthor').value='';
+    document.getElementById('bYear').value='';
+    document.getElementById('bPublisher').value='';
+    document.getElementById('bDesc').value='';
+  }
+  modal.classList.add('open');
+}
+function closeBookModal(){ document.getElementById('bookModal').classList.remove('open') }
+
+function saveBook(){
+  const name=document.getElementById('bName').value.trim();
+  const author=document.getElementById('bAuthor').value.trim();
+  const year=document.getElementById('bYear').value.trim();
+  const publisher=document.getElementById('bPublisher').value.trim();
+  const desc=document.getElementById('bDesc').value.trim();
+  const err=document.getElementById('bookErr');
+  if(!name){err.innerHTML='<i class="ti ti-alert-circle"></i> Kitob nomi majburiy';return}
+  if(!author){err.innerHTML='<i class="ti ti-alert-circle"></i> Muallif majburiy';return}
+  const books=getBooks();
+  if(editingId){
+    const i=books.findIndex(b=>b.id==editingId);
+    if(i>-1) books[i]={...books[i],name,author,year,publisher,desc};
+  } else {
+    books.unshift({id:Date.now(),name,author,year,publisher,desc,added:new Date().toISOString()});
+  }
+  saveBooks(books);
+  closeBookModal();
+  renderBookStats();
+  renderBooks();
+}
+
+function deleteBook(id){
+  if(!confirm('Kitobni o\'chirasizmi?'))return;
+  saveBooks(getBooks().filter(b=>b.id!=id));
+  renderBookStats(); renderBooks();
+}
+
+function renderLogStats(){
+  const logs=getLogs();
+  const today=logs.filter(l=>isToday(l.time)).length;
+  const last=logs[0];
+  document.getElementById('logStats').innerHTML=`
+    <div class="stat"><div class="stat-label">Jami kirish</div><div class="stat-val">${logs.length}</div></div>
+    <div class="stat"><div class="stat-label">Bugun</div><div class="stat-val">${today}</div></div>
+    <div class="stat"><div class="stat-label">Oxirgi IP</div><div class="stat-val" style="font-size:13px;padding-top:4px">${last?last.ip:'—'}</div></div>
+    <div class="stat"><div class="stat-label">Oxirgi joylashuv</div><div class="stat-val" style="font-size:12px;padding-top:4px;line-height:1.3">${last?last.location:'—'}</div></div>
+  `;
+}
+
+function renderLogs(){
+  const logs=getLogs();
+  document.getElementById('logCount').textContent=logs.length+' ta';
+  const list=document.getElementById('logList');
+  if(!logs.length){ list.innerHTML='<div class="log-empty"><i class="ti ti-inbox" style="font-size:28px;display:block;margin-bottom:8px"></i>Hali kirish tarixi yo\'q</div>'; return; }
+  list.innerHTML=logs.map((e,i)=>`
+    <div class="log-row">
+      <div class="log-num">${logs.length-i}</div>
+      <div><div class="log-time">${fmtTime(e.time)}</div><div class="log-date">${fmtDate(e.time)}</div></div>
+      <div><div class="log-ip">${e.ip}</div><div class="log-browser">${e.browser}${e.os?' · '+e.os:''}</div></div>
+      <div class="log-loc">${e.location||'—'}</div>
+      <span class="badge ${i===0&&isFresh?'badge-now':'badge-old'}">${i===0&&isFresh?'hozir':'✓'}</span>
+    </div>
+  `).join('');
+}
+
+function clearLogs(){ if(!confirm('Barcha kirish tarixini o\'chirish?'))return; saveLogs([]); isFresh=false; renderLogStats(); renderLogs(); }
+
+function exportLogs(){
+  const logs=getLogs();
+  if(!logs.length){alert('Ma\'lumot yo\'q');return}
+  let csv='№,Sana,Vaqt,IP,Brauzer,OS,Joylashuv\n';
+  logs.forEach((e,i)=>{ csv+=`${logs.length-i},${fmtDate(e.time)},${fmtTime(e.time)},${e.ip},${e.browser},${e.os},"${e.location||''}"\n` });
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  a.download='kirish-tarixi.csv'; a.click();
+}
+
+function copyIP(){
+  if(!curIP)return;
+  navigator.clipboard.writeText(curIP).then(()=>{
+    const el=document.getElementById('curIP');
+    const o=el.textContent; el.textContent='Nusxa olindi ✓';
+    setTimeout(()=>el.textContent=o,1500);
+  });
+}
+
+function openSettings(){ document.getElementById('newPass1').value=''; document.getElementById('newPass2').value=''; document.getElementById('settingsErr').innerHTML=''; document.getElementById('settingsModal').classList.add('open'); }
+function closeSettings(){ document.getElementById('settingsModal').classList.remove('open') }
+function saveSettings(){
+  const p1=document.getElementById('newPass1').value;
+  const p2=document.getElementById('newPass2').value;
+  const err=document.getElementById('settingsErr');
+  if(p1&&p1!==p2){err.innerHTML='<i class="ti ti-alert-circle"></i> Parollar mos emas';return}
+  if(p1&&p1.length<4){err.innerHTML='<i class="ti ti-alert-circle"></i> Kamida 4 belgi bo\'lsin';return}
+  const c=getConf(); if(p1)c.pass=p1; saveConf(c); closeSettings();
+}
+
+document.getElementById('bookModal').addEventListener('click',function(e){if(e.target===this)closeBookModal()});
+document.getElementById('settingsModal').addEventListener('click',function(e){if(e.target===this)closeSettings()});
+
+fetchIP();
+</script>
+</body>
+</html>
